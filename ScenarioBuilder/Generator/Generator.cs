@@ -88,7 +88,7 @@ namespace ScenarioBuilder.Generator
                 .WithParty(Party.Employer)
                 .WithApprovals(Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeships(10);
+                .WithApprenticeships(1);
             builder.Build();
         }
 
@@ -672,6 +672,44 @@ namespace ScenarioBuilder.Generator
 
             builder.Build();
         }
+        
+        public static void Single_Stopped_NonLevy()
+        {
+            var builder = new CohortBuilder();
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
+                .WithLastAction(LastAction.Approve)
+                .WithIsDraft(false)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Stopped)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithStartOption(new DateTime(2019, 6, 1))
+                        .WithStopOption(new DateTime(2020, 03, 01)));
+
+            builder.Build();
+        }
+
+        public static void Single_Complete_NonLevy()
+        {
+            var builder = new CohortBuilder();
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
+                .WithLastAction(LastAction.Approve)
+                .WithIsDraft(false)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Completed)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithStartOption(new DateTime(2019, 2, 1))
+                        .WithCompletionOption(new DateTime(2020, 04, 01)));
+
+            builder.Build();
+        }
 
         public static void ManyApproved()
         {
@@ -776,7 +814,7 @@ namespace ScenarioBuilder.Generator
                 .WithParty(Party.None)
                 .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipPaymentStatus(PaymentStatus.Cancelled)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Stopped)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
                         .WithUln("1000001880")
@@ -884,7 +922,7 @@ namespace ScenarioBuilder.Generator
 
             builder = new CohortBuilder();
             builder
-                .WithEmployer(30060, "06344082", "Rapid Logistics Co Ltd", "7EKPG7", 645)
+                .WithEmployer(30060, "06344082", "Rapid Logistics Co Ltd", "7EKPG7", 645, ApprenticeshipEmployerType.NonLevy)
                 .WithDefaultProvider()
                 .WithParty(Party.None)
                 .WithApprovals(Party.Employer | Party.Provider)
@@ -895,7 +933,7 @@ namespace ScenarioBuilder.Generator
 
             builder = new CohortBuilder();
             builder
-                .WithEmployer(30060, "06344082", "Rapid Logistics Co Ltd", "7EKPG7", 645)
+                .WithEmployer(30060, "06344082", "Rapid Logistics Co Ltd", "7EKPG7", 645, ApprenticeshipEmployerType.NonLevy)
                 .WithProvider(10005077, "Train-U-Good Corporation")
                 .WithParty(Party.None)
                 .WithApprovals(Party.Employer | Party.Provider)

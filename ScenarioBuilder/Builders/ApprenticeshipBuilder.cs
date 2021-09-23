@@ -11,6 +11,7 @@ namespace ScenarioBuilder.Builders
         public DateTime? ExplicitStartDate { get; private set; }
         public DateTime? ExplicitEndDate { get; private set; }
         public DateTime? ExplicitStopDate { get; private set; }
+        public DateTime? ExplicitCompletionDate { get; private set; }
         public ApprenticeshipStopOption Stopped { get; private set; }
         public bool HasHadDataLockSuccess { get; private set; }
         public bool HasChangeOfCircumstances { get; set; }
@@ -47,6 +48,12 @@ namespace ScenarioBuilder.Builders
         public ApprenticeshipBuilder WithStartOption(DateTime startDate)
         {
             ExplicitStartDate = startDate;
+            return this;
+        }
+
+        public ApprenticeshipBuilder WithCompletionOption(DateTime startDate)
+        {
+            ExplicitCompletionDate = startDate;
             return this;
         }
 
@@ -110,7 +117,6 @@ namespace ScenarioBuilder.Builders
             DateTime? startDate = GenerateStartDate();
             var endDate = GenerateEndDate(startDate);
             var stopDate = GenerateStopDate(startDate, endDate);
-           
 
             //todo: perhaps select a training course valid on the start date?
 
@@ -136,13 +142,14 @@ namespace ScenarioBuilder.Builders
                 TrainingName = TrainingCourse.TitleRestrictedLength,
                 Cost = CohortBuilder.HasFundingCapWarning ? TrainingCourse.MaxFunding * 2 : TrainingCourse.MaxFunding,
                 AgreementStatus = CohortBuilder.AgreementStatus,
-                PaymentStatus = stopDate.HasValue ? PaymentStatus.Cancelled : CohortBuilder.PaymentStatus,
+                PaymentStatus = stopDate.HasValue ? PaymentStatus.Stopped : CohortBuilder.PaymentStatus,
                 PaymentOrder = CohortBuilder.PaymentStatus == PaymentStatus.PendingApproval ? default(int?) : 0,
                 HasHadDataLockSuccess = HasHadDataLockSuccess,
                 HasChangeOfCircumstances = HasChangeOfCircumstances,
                 ChangeOfCircumstancesOriginator = ChangeOfCircumstancesOriginator,
                 CreatedOn = DateTime.UtcNow,
                 StopDate = stopDate,
+                CompletionDate = ExplicitCompletionDate,
                 AgreedOn = CohortBuilder.AgreedOnDate,
                 ReservationId = CohortBuilder.HasReservations ? Guid.NewGuid() : default(Guid?)
             };

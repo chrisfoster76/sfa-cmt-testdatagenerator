@@ -36,6 +36,8 @@ namespace ScenarioBuilder.Models
         public DateTime? TransferApprovalActionedOn { get; set; }
         public string AccountLegalEntityPublicHashedId { get; set; }
 
+        public ApprenticeshipEmployerType? ApprenticeshipEmployerTypeOnApproval { get; set; } //todo: this gets set for pre-approval records, which does not simulate reality
+
         public List<Apprenticeship> Apprenticeships { get; set; }
         public List<Message> Messages { get; set; }
     }

@@ -56,7 +56,8 @@ namespace ScenarioBuilder.Builders
             _commitment.LegalEntityAddress = "1 High Street";
             _commitment.LegalEntityOrganisationType = 1;
             _commitment.AccountLegalEntityPublicHashedId = "XEGE5X";
-
+            _commitment.ApprenticeshipEmployerTypeOnApproval = ApprenticeshipEmployerType.Levy;
+            _commitment.AccountLegalEntityId = 2817;
             _commitment.ProviderId = 10005077;
             _commitment.ProviderName = "Train-U-Good Corporation";
 
@@ -72,6 +73,7 @@ namespace ScenarioBuilder.Builders
             _commitment.LegalEntityOrganisationType = 1;
             _commitment.AccountLegalEntityPublicHashedId = "XEGE5X";
             _commitment.AccountLegalEntityId = 2817;
+            _commitment.ApprenticeshipEmployerTypeOnApproval = ApprenticeshipEmployerType.Levy;
             return this;
         }
 
@@ -84,6 +86,7 @@ namespace ScenarioBuilder.Builders
             _commitment.LegalEntityOrganisationType = 1;
             _commitment.AccountLegalEntityPublicHashedId = "X9JE72";
             _commitment.AccountLegalEntityId = 645;
+            _commitment.ApprenticeshipEmployerTypeOnApproval = ApprenticeshipEmployerType.NonLevy;
             return this;
         }
 
@@ -95,7 +98,7 @@ namespace ScenarioBuilder.Builders
             return this;
         }
 
-        public CohortBuilder WithEmployer(long accountId, string legalEntityId, string name, string accountLegalEntityPublicHashedId, long accountLegalEntityId)
+        public CohortBuilder WithEmployer(long accountId, string legalEntityId, string name, string accountLegalEntityPublicHashedId, long accountLegalEntityId, ApprenticeshipEmployerType apprenticeshipEmployerType)
         {
             _commitment.EmployerAccountId = accountId;
             _commitment.LegalEntityId = legalEntityId;
@@ -104,6 +107,7 @@ namespace ScenarioBuilder.Builders
             _commitment.LegalEntityOrganisationType = 1;
             _commitment.AccountLegalEntityPublicHashedId = accountLegalEntityPublicHashedId;
             _commitment.AccountLegalEntityId = accountLegalEntityId;
+            _commitment.ApprenticeshipEmployerTypeOnApproval = apprenticeshipEmployerType;
             return this;
         }
 

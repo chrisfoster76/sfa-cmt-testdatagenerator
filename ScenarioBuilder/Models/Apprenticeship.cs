@@ -33,6 +33,7 @@ namespace ScenarioBuilder.Models
         public int? PaymentOrder { get; set; }
         public DateTime? StopDate { get; set; }
         public DateTime? PauseDate { get; set; }
+        public DateTime? CompletionDate { get; set; }
         public bool HasHadDataLockSuccess { get; set; }
 
         public List<DataLock> DataLocks { get; set; }
