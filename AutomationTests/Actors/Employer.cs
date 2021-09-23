@@ -11,6 +11,7 @@ namespace AutomationTests.Actors
         public string EncodedAccountLegalEntityId => HashingHelper.EncodeAccountLegalEntityId(AccountLegalEntityId);
         public string Username { get; private set; }
         public bool IsLevyPayer { get; private set; }
+        public bool HasMultipleLegalEntities { get; private set; }
         /// <summary>
         /// Indicates an encoded transfer sender id for use for this employer. Used due to simulation of transfer selection in Add journey
         /// </summary>
@@ -38,7 +39,8 @@ namespace AutomationTests.Actors
                         AccountLegalEntityId = 2818,
                         Username = "employer-user",
                         IsLevyPayer = true,
-                        TransferSenderId = ""
+                        TransferSenderId = "",
+                        HasMultipleLegalEntities = true
                     };
                 default:
                     throw new ArgumentException();
