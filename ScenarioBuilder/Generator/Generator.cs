@@ -986,7 +986,7 @@ namespace ScenarioBuilder.Generator
                 .WithParty(Party.None)
                 .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipPaymentStatus(PaymentStatus.Cancelled)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Stopped)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
                         .WithStartOption(new DateTime(2019, 6, 1))
@@ -1007,7 +1007,7 @@ namespace ScenarioBuilder.Generator
                 .WithParty(Party.None)
                 .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipPaymentStatus(PaymentStatus.Cancelled)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Stopped)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
                         .WithStartOption(new DateTime(2017, 5, 1))
@@ -1030,7 +1030,7 @@ namespace ScenarioBuilder.Generator
                 .WithParty(Party.None)
                 .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipPaymentStatus(PaymentStatus.Cancelled)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Stopped)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
                         .WithStartOption(new DateTime(2018, 1, 1))
@@ -1053,7 +1053,7 @@ namespace ScenarioBuilder.Generator
                 .WithApprovals(Party.Employer | Party.Provider | Party.TransferSender)
                 .WithLastAction(LastAction.Approve)
                 .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Approved)
-                .WithApprenticeshipPaymentStatus(PaymentStatus.Cancelled)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Stopped)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
                         .WithStartOption(new DateTime(2019, 6, 1))
@@ -1072,7 +1072,7 @@ namespace ScenarioBuilder.Generator
                 .WithParty(Party.None)
                 .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipPaymentStatus(PaymentStatus.Cancelled)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Stopped)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
                         .WithStartOption(new DateTime(2019, 6, 1))
