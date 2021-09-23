@@ -36,6 +36,13 @@ namespace AutomationTests.Pages
             return result;
         }
 
+        public virtual async Task<T> Redirect<T>() where T : PageObject
+        {
+            var result = PageObjectFactory.CreatePage<T>(Page);
+            await VerifyPageTitle(result);
+            return result;
+        }
+
         #endregion
 
         private async Task VerifyPageTitle(PageObject result)

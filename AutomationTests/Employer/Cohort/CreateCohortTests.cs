@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutomationTests.Actors;
 using AutomationTests.Pages.Employer.Unapproved;
 using AutomationTests.Pages.Employer.Unapproved.AddCohort;
@@ -17,10 +18,22 @@ namespace AutomationTests.Employer.Cohort
         {
             var employer = Actors.Employer.Create(employerActor);
 
-            //Journey begins in v1, but jumps to v2 select provider page, so let's start here
-            var selectProviderPage = new SelectProviderPage(Page);
-            await selectProviderPage.GoToPage(employer.EncodedAccountId, employer.EncodedAccountLegalEntityId,
-                withTransferSender ? employer.TransferSenderId : "");
+            //Journey begins at legal entity selection page (for all intents and purposes)
+            var chooseOrganisationPage = new ChooseOrganisationPage(Page);
+            await chooseOrganisationPage.GoToPage(employer.EncodedAccountId);
+
+            SelectProviderPage selectProviderPage;
+
+            if (employer.HasMultipleLegalEntities)
+            {
+                await chooseOrganisationPage.SelectLegalEntity();
+                selectProviderPage = await chooseOrganisationPage.ClickContinue<SelectProviderPage>();
+            }
+            else
+            {
+                //if only one legal entity, system will have automatically redirected to select provider page
+                selectProviderPage = await chooseOrganisationPage.Redirect<SelectProviderPage>();
+            }
 
             //select/add provider
             await selectProviderPage.EnterProviderId(DefaultProvider.ProviderId.ToString());

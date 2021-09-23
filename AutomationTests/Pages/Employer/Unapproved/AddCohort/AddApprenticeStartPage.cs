@@ -8,7 +8,7 @@ namespace AutomationTests.Pages.Employer.Unapproved.AddCohort
         public AddApprenticeStartPage(Page page) : base(page)
         { }
 
-        private static string StartNowButton = ".govuk-button";
+        private static string StartNowButton = "#continue-button";
 
         public async Task<T> ClickContinue<T>() where T: PageObject
         {

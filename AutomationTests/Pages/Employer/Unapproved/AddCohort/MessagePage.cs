@@ -24,6 +24,6 @@ namespace AutomationTests.Pages.Employer.Unapproved.AddCohort
         }
 
         private static string Message = "#Message";
-        private static string SendButton = ".govuk-button";
+        private static string SendButton = "#continue-button";
     }
 }

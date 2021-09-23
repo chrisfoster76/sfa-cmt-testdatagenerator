@@ -37,6 +37,7 @@ namespace ScenarioBuilder.Models
         public bool HasHadDataLockSuccess { get; set; }
 
         public List<DataLock> DataLocks { get; set; }
+        public List<ChangeOfPartyRequest> ChangeOfPartyRequests { get; set; }
         public bool HasChangeOfCircumstances { get; set; }
         public Originator ChangeOfCircumstancesOriginator { get; set; }
 
@@ -54,6 +55,7 @@ namespace ScenarioBuilder.Models
         public Apprenticeship()
         {
             DataLocks = new List<DataLock>();
+            ChangeOfPartyRequests = new List<ChangeOfPartyRequest>();
         }
     }
 }

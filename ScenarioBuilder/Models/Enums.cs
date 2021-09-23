@@ -78,6 +78,19 @@ namespace ScenarioBuilder.Models
         Provider = 2,
         TransferSender = 4
     }
+	    public enum ChangeOfPartyRequestType : byte
+    {
+        ChangeEmployer = 0,
+        ChangeProvider = 1
+    }
+
+    public enum ChangeOfPartyRequestStatus : byte
+    {
+        Pending = 0,
+        Rejected = 1,
+        Withdrawn = 2,
+        Approved = 3
+    }
 
     public enum ApprenticeshipEmployerType : byte
     {

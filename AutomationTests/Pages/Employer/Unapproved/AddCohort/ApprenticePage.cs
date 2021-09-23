@@ -31,6 +31,6 @@ namespace AutomationTests.Pages.Employer.Unapproved.AddCohort
 
         private static string FirstName = "#FirstName";
         private static string LastName = "#LastName";
-        private static string ContinueButton = ".govuk-button";
+        private static string ContinueButton = "#continue-button";
     }
 }

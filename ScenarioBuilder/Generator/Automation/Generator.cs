@@ -44,7 +44,6 @@ namespace ScenarioBuilder.Generator.Automation
             builder.Build();
         }
 
-
         public static void Single_Stopped_Apprentice()
         {
             var builder = new CohortBuilder();

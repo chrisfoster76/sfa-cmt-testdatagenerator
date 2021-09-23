@@ -64,7 +64,7 @@ namespace ScenarioBuilder.Generator
                 .WithApprenticeships(10);
             builder.Build();
         }
- 
+
         public static void Scenario_Cohort_Employer_Draft()
         {
             var builder = new CohortBuilder();
@@ -217,7 +217,9 @@ namespace ScenarioBuilder.Generator
                 .WithParty(Party.TransferSender)
                 .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Pending) //todo: refactor this so that status is based on being with transfer sender
+                .WithTransferSender(8194, "Mega Corp",
+                    TransferApprovalStatus
+                        .Pending) //todo: refactor this so that status is based on being with transfer sender
                 .WithApprenticeships(10)
                 .WithFundingCapWarning();
             builder.Build();
@@ -600,8 +602,8 @@ namespace ScenarioBuilder.Generator
                     new ApprenticeshipBuilder(builder)
                         .WithUln("1000001880")
                         .WithStartOption(new DateTime(2018, 6, 1))
-                        .WithEndOption(new DateTime(2019, 6, 23))
-                        .WithStopOption(new DateTime(2018, 9, 12))
+                        .WithEndOption(new DateTime(2019, 6, 1))
+                        .WithStopOption(new DateTime(2018, 7, 1))
                 );
             builder.Build();
 
@@ -971,6 +973,114 @@ namespace ScenarioBuilder.Generator
                     .WithApprenticeships(3);
                 builder.Build();
             }
+        }
+
+
+        public static void Apprentice_Stopped_NonLevy()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Cancelled)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithStartOption(new DateTime(2019, 6, 1))
+                        .WithStopOption(new DateTime(2020, 3, 1))
+                );
+            builder.Build();
+        }
+
+        public static void Apprentice_Stopped_NonLevy_Expired()
+        {
+            var course = new TrainingCourse { Id = "403-2-1", Title = "Food and Drink: Meat and Poultry Industry Skills" };
+
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Cancelled)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithStartOption(new DateTime(2017, 5, 1))
+                        .WithEndOption(new DateTime(2021, 1, 1))
+                        .WithStopOption(new DateTime(2019, 1, 1))
+                        .WithTrainingCourse(course)
+                );
+            builder.Build();
+        }
+
+        public static void Apprentice_Stopped_NonLevy_FundingCapChange()
+        {
+            var course = new TrainingCourse {Id = "176", Title = "Accident Repair Technician"};
+
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Cancelled)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithStartOption(new DateTime(2018, 1, 1))
+                        .WithStopOption(new DateTime(2020, 3, 1))
+                        .WithTrainingCourse(course)
+                        .WithCost(10000)
+                );
+            builder.Build();
+        }
+
+
+        public static void Apprentice_Stopped_NonLevy_Transfer()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider | Party.TransferSender)
+                .WithLastAction(LastAction.Approve)
+                .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Approved)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Cancelled)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithStartOption(new DateTime(2019, 6, 1))
+                        .WithStopOption(new DateTime(2020, 3, 1))
+                );
+            builder.Build();
+        }
+
+        public static void Apprentice_Stopped_WithChangeOfPartyRequest_NonLevy()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Cancelled)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithStartOption(new DateTime(2019, 6, 1))
+                        .WithStopOption(new DateTime(2020, 3, 1))
+                        .WithChangeOfPartyRequest()
+                        
+                );
+            builder.Build();
         }
     }
 }

@@ -53,8 +53,11 @@ namespace ScenarioBuilder.Generator
                 new Scenario("Employer With Multiple Providers", Generator.EmployerWithMultipleProviders),
                 new Scenario("Employer With Multiple Providers V2", Generator.EmployerWithMultipleProvidersV2),
                 new Scenario("Apprentice_Stopped_And_Restarted_NonLevy", Generator.Apprentice_Stopped_And_Restarted_NonLevy),
-                new Scenario("Single stopped apprentice (non levy)", Generator.Single_Stopped_NonLevy),
-                new Scenario("Single complete apprentice (non levy)", Generator.Single_Complete_NonLevy)
+                new Scenario("Stopped apprenticeship (nonlevy)", Generator.Apprentice_Stopped_NonLevy),
+                new Scenario("Stopped apprenticeship (nonlevy) - expired course", Generator.Apprentice_Stopped_NonLevy_Expired),
+                new Scenario("Stopped apprenticeship (nonlevy) - funding cap warning", Generator.Apprentice_Stopped_NonLevy_FundingCapChange),
+                new Scenario("Stopped apprenticeship with Change of Party Request (nonlevy)", Generator.Apprentice_Stopped_WithChangeOfPartyRequest_NonLevy),
+                new Scenario("Stopped apprenticeship - transfer (nonlevy)", Generator.Apprentice_Stopped_NonLevy_Transfer)
             };
         }
 

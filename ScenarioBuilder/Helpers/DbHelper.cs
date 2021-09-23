@@ -2,6 +2,7 @@
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using Dapper;
 using Newtonsoft.Json;
 using ScenarioBuilder.Models;
@@ -35,8 +36,13 @@ namespace ScenarioBuilder.Helpers
 
             connection.Execute("DBCC CHECKIDENT ('[Commitment]', RESEED, 0);");
             connection.Execute("DBCC CHECKIDENT ('[Apprenticeship]', RESEED, 0);");
+            connection.Execute("DBCC CHECKIDENT ('[DataLockStatus]', RESEED, 0);");
+            connection.Execute("DBCC CHECKIDENT ('[TransferRequest]', RESEED, 0);");
+            connection.Execute("DBCC CHECKIDENT ('[ApprenticeshipUpdate]', RESEED, 0);");
+            connection.Execute("DBCC CHECKIDENT ('[PriceHistory]', RESEED, 0);");
+            connection.Execute("DBCC CHECKIDENT ('[Message]', RESEED, 0);");
+            connection.Execute("DBCC CHECKIDENT ('[ChangeOfPartyRequest]', RESEED, 0);");
         }
-
 
         public static void SaveCommitment(Commitment cohort)
         {
@@ -178,7 +184,6 @@ namespace ScenarioBuilder.Helpers
         public static void CreateChangeOfCircumstances(Apprenticeship apprenticeship, Originator originator = Originator.Employer)
         {
             //todo: allow different originators
-            
 
             var connection = GetConnection();
 
@@ -192,8 +197,34 @@ namespace ScenarioBuilder.Helpers
                 Status = 0,
                 FirstName = "Jonny Boo"
             });
+        }
 
+        public static void SaveChangeOfPartyRequest(ChangeOfPartyRequest changeOfPartyRequest)
+        {
+            var connection = GetConnection();
 
+            var query = @"insert into ChangeOfPartyRequest([ApprenticeshipId]
+           ,[ChangeOfPartyType]
+           ,[OriginatingParty]
+           ,[AccountLegalEntityId]
+           ,[ProviderId]
+           ,[Price]
+           ,[StartDate]
+           ,[EndDate]
+           ,[CreatedOn]
+           ,[Status]) values
+            (@ApprenticeshipId
+            ,@ChangeOfPartyType
+            ,@OriginatingParty
+           ,@AccountLegalEntityId
+           ,@ProviderId
+           ,@Price
+           ,@StartDate
+           ,@EndDate
+           ,@CreatedOn
+           ,@Status)";
+
+            connection.Execute(query, changeOfPartyRequest);
         }
     }
 }

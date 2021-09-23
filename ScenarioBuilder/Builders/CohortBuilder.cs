@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using ScenarioBuilder.Helpers;
 using ScenarioBuilder.Models;
 
@@ -120,6 +121,20 @@ namespace ScenarioBuilder.Builders
         public CohortBuilder WithParty(Party assignedParty)
         {
             _commitment.WithParty = assignedParty;
+
+            if (assignedParty == Party.Employer)
+            {
+                _commitment.EditStatus = EditStatus.Employer;
+            }
+            else if(assignedParty == Party.Provider)
+            {
+                _commitment.EditStatus = EditStatus.Provider;
+            }
+            else
+            {
+                _commitment.EditStatus = EditStatus.Both;
+            }
+
             return this;
         }
 
@@ -201,6 +216,11 @@ namespace ScenarioBuilder.Builders
                 {
                     DbHelper.CreateChangeOfCircumstances(apprenticeship, apprenticeship.ChangeOfCircumstancesOriginator);
                 }
+
+                foreach (var cop in apprenticeship.ChangeOfPartyRequests)
+                {
+                    DbHelper.SaveChangeOfPartyRequest(cop);
+                }
             }
 
             if (_commitment.TransferApprovalStatus.HasValue)
@@ -257,6 +277,11 @@ namespace ScenarioBuilder.Builders
             if (approvingParties.HasFlag(Party.Employer) && approvingParties.HasFlag(Party.Provider))
             {
                 _commitment.EmployerAndProviderApprovedOn = DateTime.UtcNow;
+            }
+
+            if (approvingParties.HasFlag(Party.Employer) && approvingParties.HasFlag(Party.Provider))
+            {
+                _commitment.EditStatus = EditStatus.Both;
             }
 
             return this;

@@ -16,6 +16,7 @@ namespace ScenarioBuilder.Builders
         public bool HasHadDataLockSuccess { get; private set; }
         public bool HasChangeOfCircumstances { get; set; }
         public Originator ChangeOfCircumstancesOriginator { get; set; }
+        public ChangeOfPartyRequestType? ChangeOfParty { get; set; }
         public TrainingCourse TrainingCourse { get; private set; }
         public int Cost { get; private set; }
         public string Uln { get; private set; }
@@ -70,6 +71,12 @@ namespace ScenarioBuilder.Builders
         public ApprenticeshipBuilder WithStopOption(DateTime stopDate)
         {
             ExplicitStopDate = stopDate;
+            return this;
+        }
+
+        public ApprenticeshipBuilder WithChangeOfPartyRequest()
+        {
+            ChangeOfParty = ChangeOfPartyRequestType.ChangeEmployer;
             return this;
         }
 
@@ -226,6 +233,27 @@ namespace ScenarioBuilder.Builders
                     PriceEpisodeIdentifier = apprenticeship.TrainingCode + '-' + priceChangeDate.ToShortDateString(),
                     Status = 2
                 });
+            }
+
+            //Change of Party
+            if (ChangeOfParty.HasValue)
+            {
+                //todo: new ale is hard coded! and no provider id!
+                var cop = new ChangeOfPartyRequest
+                {
+                    ApprenticeshipId = Id,
+                    ChangeOfPartyType = ChangeOfParty.Value,
+                    OriginatingParty = ChangeOfParty.Value == ChangeOfPartyRequestType.ChangeEmployer ? Party.Provider : Party.Employer,
+                    AccountLegalEntityId = ChangeOfParty == ChangeOfPartyRequestType.ChangeEmployer ? 2818 : default(long?), 
+                    //ProviderId = 
+                    Price = 1000,
+                    StartDate = stopDate.Value,
+                    EndDate = endDate,
+                    CreatedOn = DateTime.UtcNow,
+                    Status = ChangeOfPartyRequestStatus.Pending
+                };
+
+                apprenticeship.ChangeOfPartyRequests.Add(cop);
             }
 
             return apprenticeship;

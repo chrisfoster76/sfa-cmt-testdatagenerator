@@ -45,10 +45,10 @@ namespace AutomationTests.Employer
             Console.WriteLine($"Opening {url}");
             var response  = await Page.GoToAsync(url);
 
-            await Page.TypeInputAsync(LaunchPage.EmailAddress, employer.Username);
-            await Page.TypeInputAsync(LaunchPage.Password, employer.Password);
+            //await Page.TypeInputAsync(LaunchPage.EmailAddress, employer.Username);
+            //await Page.TypeInputAsync(LaunchPage.Password, employer.Password);
             Console.Write("Signing in... ");
-            await Page.ClickOn(LaunchPage.SignIn);
+            await Page.ClickOn($"{LaunchPage.SignInPrefx}{employer.Username}");
             await Page.WaitForNavigationAsync();
             Console.WriteLine("Complete");
         }
