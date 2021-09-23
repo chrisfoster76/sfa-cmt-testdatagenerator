@@ -11,7 +11,7 @@ namespace AutomationTests.Pages.Employer.Unapproved.AddCohort
         public override string PageTitle => "Add training provider details";
         public override string Url => Constants.EmployerBaseUrl + "/{accountId}/unapproved/add/select-provider?AccountLegalEntityHashedId={accountLegalEntityId}&transferSenderId={transferSenderId}";
         private static string ProviderId = "[name=\"ProviderId\"]";
-        private static string ContinueButton = ".govuk-button";
+        private static string ContinueButton = "#continue-button";
 
         public async Task GoToPage(string accountId, string accountLegalEntityId, string transferSenderId)
         {

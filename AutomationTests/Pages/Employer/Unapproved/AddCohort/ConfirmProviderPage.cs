@@ -30,6 +30,6 @@ namespace AutomationTests.Pages.Employer.Unapproved.AddCohort
 
         private static string UseThisProviderOption = "#UseThisProvider";
         private static string ChangeProviderOption = "#UseThisProvider-no";
-        private static string ContinueButton = ".govuk-button";
+        private static string ContinueButton = "#continue-button";
     }
 }

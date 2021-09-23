@@ -29,6 +29,6 @@ namespace AutomationTests.Pages.Employer.Unapproved.AddCohort
 
         private static string IWillAddApprenticesOption = "#WhoIsAddingApprentices";
         private static string ProviderWillAddApprentices = "#WhoIsAddingApprentices-Provider";
-        private static string ContinueButton = ".govuk-button";
+        private static string ContinueButton = "#continue-button";
     }
 }
