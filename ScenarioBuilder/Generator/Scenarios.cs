@@ -18,6 +18,7 @@ namespace ScenarioBuilder.Generator
                 new Scenario("Cohort ready for NonLevy Employer approval", Generator.Scenario_Cohort_NonLevyEmployer_ReadyForApproval),
                 new Scenario("Cohort ready for Provider approval", Generator.Scenario_Cohort_Provider_ReadyForApproval),
                 new Scenario("Transfer Cohort with Provider", Generator.Scenario_Transfer_Cohort_Provider),
+                new Scenario("Transfer Pledge Application Cohort with Provider", Generator.Scenario_Pledge_Transfer_Cohort_Provider),
                 new Scenario("Transfer Cohort with Non Levy Employer", Generator.Scenario_Transfer_Cohort_NonLevy_Employer),
                 new Scenario("Multiple Cohorts with Non Levy Employer", Generator.Scenario_NonLevy_Employer_Many_Cohorts),
                 new Scenario("Draft Cohort with Non Levy Employer", Generator.Scenario_Cohort_With_NonLevy_Employer_Draft),

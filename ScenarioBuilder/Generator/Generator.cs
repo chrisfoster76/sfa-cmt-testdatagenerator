@@ -122,6 +122,21 @@ namespace ScenarioBuilder.Generator
             builder.Build();
         }
 
+        public static void Scenario_Pledge_Transfer_Cohort_Provider()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithParty(Party.Provider)
+                .WithApprovals(Party.Employer)
+                .WithLastAction(LastAction.Approve)
+                .WithTransferSender(8194, "Mega Corp", null,1)
+                .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder));
+            builder.Build();
+        }
+
         public static void Scenario_Transfer_Cohort_NonLevy_Employer()
         {
             var builder = new CohortBuilder();

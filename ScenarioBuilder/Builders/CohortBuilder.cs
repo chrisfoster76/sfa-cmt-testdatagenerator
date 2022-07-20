@@ -139,11 +139,12 @@ namespace ScenarioBuilder.Builders
         }
 
         public CohortBuilder WithTransferSender(long transferSenderId, string transferSenderName,
-            TransferApprovalStatus? transferApprovalStatus)
+            TransferApprovalStatus? transferApprovalStatus, int? pledgeApplicationId = null)
         {
             _commitment.TransferSenderId = transferSenderId;
             _commitment.TransferSenderName = transferSenderName;
             _commitment.TransferApprovalStatus = transferApprovalStatus;
+            _commitment.PledgeApplicationId = pledgeApplicationId;
 
             return this;
         }
