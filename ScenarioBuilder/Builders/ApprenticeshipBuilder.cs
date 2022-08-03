@@ -74,9 +74,9 @@ namespace ScenarioBuilder.Builders
             return this;
         }
 
-        public ApprenticeshipBuilder WithChangeOfPartyRequest()
+        public ApprenticeshipBuilder WithChangeOfPartyRequest(ChangeOfPartyRequestType requestType)
         {
-            ChangeOfParty = ChangeOfPartyRequestType.ChangeEmployer;
+            ChangeOfParty = requestType;
             return this;
         }
 
@@ -143,6 +143,7 @@ namespace ScenarioBuilder.Builders
                 Cost = CohortBuilder.HasFundingCapWarning ? TrainingCourse.MaxFunding * 2 : TrainingCourse.MaxFunding,
                 AgreementStatus = CohortBuilder.AgreementStatus,
                 PaymentStatus = stopDate.HasValue ? PaymentStatus.Stopped : CohortBuilder.PaymentStatus,
+                DeliveryModel = CohortBuilder.DeliveryModel,
                 PaymentOrder = CohortBuilder.PaymentStatus == PaymentStatus.PendingApproval ? default(int?) : 0,
                 HasHadDataLockSuccess = HasHadDataLockSuccess,
                 HasChangeOfCircumstances = HasChangeOfCircumstances,
@@ -324,6 +325,11 @@ namespace ScenarioBuilder.Builders
         }
 
 
+        public ApprenticeshipBuilder WithPortableTrainingCourse()
+        {
+            TrainingCourse = new TrainingCourse { Id = "274", Level = 2, MaxFunding = 6000, Title = "Abattoir worker" };
+            return this;
+        }
     }
 
     public enum ApprenticeshipStartedOption

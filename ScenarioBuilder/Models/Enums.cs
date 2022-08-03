@@ -97,4 +97,11 @@ namespace ScenarioBuilder.Models
         NonLevy = 0,
         Levy = 1
     }
+
+    public enum DeliveryModel : byte
+    {
+        Regular = 0,
+        PortableFlexiJob = 1,
+        FlexiJobAgency = 2
+    }
 }

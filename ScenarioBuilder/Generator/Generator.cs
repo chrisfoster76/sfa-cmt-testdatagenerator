@@ -256,6 +256,43 @@ namespace ScenarioBuilder.Generator
 
         }
 
+        public static void Scenario_Fully_Approved_Cohort_FlexiJobAgency()
+        {
+
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithFlexiJobAgencyEmployer()
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithApprenticeshipDeliveryModel(DeliveryModel.FlexiJobAgency)
+                .WithApprenticeships(1);
+            builder.Build();
+
+        }
+
+        public static void Scenario_Fully_Approved_Cohort_Portable()
+        {
+
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithDefaultEmployer()
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithApprenticeshipDeliveryModel(DeliveryModel.PortableFlexiJob)
+                .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder).WithPortableTrainingCourse());
+            builder.Build();
+
+        }
+
+
         public static void Scenario_Fully_Approved_Cohort_NonLevy_WithReservation()
         {
 
@@ -1077,7 +1114,7 @@ namespace ScenarioBuilder.Generator
             builder.Build();
         }
 
-        public static void Apprentice_Stopped_WithChangeOfPartyRequest_NonLevy()
+        public static void Apprentice_Stopped_WithChangeOfEmployerRequest_NonLevy()
         {
             var builder = new CohortBuilder();
 
@@ -1092,8 +1129,30 @@ namespace ScenarioBuilder.Generator
                     new ApprenticeshipBuilder(builder)
                         .WithStartOption(new DateTime(2019, 6, 1))
                         .WithStopOption(new DateTime(2020, 3, 1))
-                        .WithChangeOfPartyRequest()
+                        .WithChangeOfPartyRequest(ChangeOfPartyRequestType.ChangeEmployer)
                         
+                );
+            builder.Build();
+        }
+
+        public static void Apprentice_Stopped_Portable_WithChangeOfEmployerRequest_NonLevy()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Stopped)
+                .WithApprenticeshipDeliveryModel(DeliveryModel.PortableFlexiJob)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithStartOption(new DateTime(2019, 6, 1))
+                        .WithStopOption(new DateTime(2020, 3, 1))
+                        .WithChangeOfPartyRequest(ChangeOfPartyRequestType.ChangeEmployer)
+
                 );
             builder.Build();
         }

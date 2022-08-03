@@ -28,6 +28,8 @@ namespace ScenarioBuilder.Generator
                 new Scenario("Fully Approved Cohort", Generator.Scenario_Fully_Approved_Cohort),
                 new Scenario("Fully Approved Cohort Non Levy (with ReservationId)", Generator.Scenario_Fully_Approved_Cohort_NonLevy_WithReservation),
                 new Scenario("Fully Approved Transfers Cohort", Generator.Scenario_Fully_Approved_Transfer_Cohort),
+                new Scenario("Fully Approved Cohort for Flexi Job Agency", Generator.Scenario_Fully_Approved_Cohort_FlexiJobAgency),
+                new Scenario("Fully Approved Cohort for Portable", Generator.Scenario_Fully_Approved_Cohort_Portable),
                 new Scenario("Approved Apprentices (Live and Waiting to Start) with Data Lock success", Generator.Scenario_Fully_Approved_Apprentices_With_DataLock_Success),
                 new Scenario("Approved Apprentices (Live and Waiting to Start) pending Data Lock success", Generator.Scenario_Fully_Approved_Apprentices_Pending_DataLock_Success),
                 new Scenario("Approved Transfer Apprentices (Live and Waiting to Start) with Data Lock success", Generator.Scenario_Fully_Approved_Transfer_Apprentices_With_DataLock_Success),
@@ -57,7 +59,8 @@ namespace ScenarioBuilder.Generator
                 new Scenario("Stopped apprenticeship (nonlevy)", Generator.Apprentice_Stopped_NonLevy),
                 new Scenario("Stopped apprenticeship (nonlevy) - expired course", Generator.Apprentice_Stopped_NonLevy_Expired),
                 new Scenario("Stopped apprenticeship (nonlevy) - funding cap warning", Generator.Apprentice_Stopped_NonLevy_FundingCapChange),
-                new Scenario("Stopped apprenticeship with Change of Party Request (nonlevy)", Generator.Apprentice_Stopped_WithChangeOfPartyRequest_NonLevy),
+                new Scenario("Stopped apprenticeship with Change of Employer Request (nonlevy)", Generator.Apprentice_Stopped_WithChangeOfEmployerRequest_NonLevy),
+                new Scenario("Stopped portable apprenticeship with Change of Employer Request (nonlevy)", Generator.Apprentice_Stopped_Portable_WithChangeOfEmployerRequest_NonLevy),
                 new Scenario("Stopped apprenticeship - transfer (nonlevy)", Generator.Apprentice_Stopped_NonLevy_Transfer)
             };
         }

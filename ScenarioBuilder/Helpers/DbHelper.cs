@@ -57,12 +57,12 @@ namespace ScenarioBuilder.Helpers
 
             var query = "insert into Apprenticeship " +
                         "([CommitmentId],[FirstName],[LastName],[ULN],[TrainingType],[TrainingCode],[TrainingName],[Cost]" +
-                        ",[StartDate],[EndDate],[AgreementStatus],[PaymentStatus],[DateOfBirth],[NINumber],[EmployerRef]" +
+                        ",[StartDate],[EndDate],[AgreementStatus],[PaymentStatus],[DeliveryModel],[DateOfBirth],[NINumber],[EmployerRef]" +
                         ",[ProviderRef],[CreatedOn],[AgreedOn],[PaymentOrder],[StopDate],[PauseDate],[HasHadDataLockSuccess]," +
                         "[PendingUpdateOriginator],[ReservationId],[CompletionDate], [Email])" +
                         "VALUES(" +
                         "@CommitmentId,@FirstName,@LastName, @ULN, @TrainingType, @TrainingCode,@TrainingName, @Cost, @StartDate," +
-                        "@EndDate,@AgreementStatus,@PaymentStatus,@DateOfBirth,@NINumber, @EmployerRef, @ProviderRef, @CreatedOn, @AgreedOn, " +
+                        "@EndDate,@AgreementStatus,@PaymentStatus,@DeliveryModel, @DateOfBirth,@NINumber, @EmployerRef, @ProviderRef, @CreatedOn, @AgreedOn, " +
                         "@PaymentOrder, @StopDate, @PauseDate, @HasHadDataLockSuccess,@PendingUpdateOriginator,@ReservationId,@CompletionDate,'test@foo.com')";
 
             var result = connection.Execute(query, apprenticeship);
