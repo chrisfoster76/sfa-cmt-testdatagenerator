@@ -24,6 +24,7 @@ namespace ScenarioBuilder.Models
         public DateTime? EndDate { get; set; }
         public AgreementStatus AgreementStatus { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
+        public DeliveryModel DeliveryModel { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string NINumber { get; set; }
         public string EmployerRef { get; set; }

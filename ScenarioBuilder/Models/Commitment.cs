@@ -31,8 +31,7 @@ namespace ScenarioBuilder.Models
         public long? TransferSenderId { get; set; }
         public string TransferSenderName { get; set; }
         public TransferApprovalStatus? TransferApprovalStatus { get; set; }
-        public string TransferApprovalActionedByEmployerName { get; set; }
-        public string TransferApprovalActionedByEmployerEmail { get; set; }
+        public int? PledgeApplicationId { get; set; }
         public DateTime? TransferApprovalActionedOn { get; set; }
         public string AccountLegalEntityPublicHashedId { get; set; }
 

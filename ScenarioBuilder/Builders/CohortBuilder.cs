@@ -14,6 +14,8 @@ namespace ScenarioBuilder.Builders
 
         public AgreementStatus AgreementStatus { get; private set; }
         public PaymentStatus PaymentStatus { get; private set; }
+        public DeliveryModel DeliveryModel { get; private set; } = DeliveryModel.Regular;
+        public string TrainingCourse { get; private set; }
         public bool HasReservations { get; private set; } = true;
         public int Messages { get; private set; }
         public DateTime? AgreedOnDate { get; private set; }
@@ -90,6 +92,18 @@ namespace ScenarioBuilder.Builders
             return this;
         }
 
+        public CohortBuilder WithFlexiJobAgencyEmployer()
+        {
+            _commitment.EmployerAccountId = 36853;
+            _commitment.LegalEntityId = "70110101";
+            _commitment.LegalEntityName = "Positivity Ltd (FJAA)";
+            _commitment.LegalEntityAddress = "1 High Street";
+            _commitment.LegalEntityOrganisationType = 1;
+            _commitment.AccountLegalEntityPublicHashedId = "XKD5Z2";
+            _commitment.AccountLegalEntityId = 701;
+            _commitment.ApprenticeshipEmployerTypeOnApproval = ApprenticeshipEmployerType.NonLevy;
+            return this;
+        }
 
         public CohortBuilder WithDefaultProvider()
         {
@@ -139,11 +153,12 @@ namespace ScenarioBuilder.Builders
         }
 
         public CohortBuilder WithTransferSender(long transferSenderId, string transferSenderName,
-            TransferApprovalStatus? transferApprovalStatus)
+            TransferApprovalStatus? transferApprovalStatus, int? pledgeApplicationId = null)
         {
             _commitment.TransferSenderId = transferSenderId;
             _commitment.TransferSenderName = transferSenderName;
             _commitment.TransferApprovalStatus = transferApprovalStatus;
+            _commitment.PledgeApplicationId = pledgeApplicationId;
 
             return this;
         }
@@ -186,6 +201,12 @@ namespace ScenarioBuilder.Builders
         {
             PaymentStatus = status;
             AgreedOnDate = approvalDate.HasValue ? approvalDate.Value : default(DateTime?);
+            return this;
+        }
+
+        public CohortBuilder WithApprenticeshipDeliveryModel(DeliveryModel deliveryModel)
+        {
+            DeliveryModel = deliveryModel;
             return this;
         }
 
