@@ -19,6 +19,13 @@ namespace AutomationTests.Pages.Employer.Unapproved.AddCohort
             return PageObjectFactory.CreatePage<T>(Page) ;
         }
 
+        public async Task SelectStandard()
+        {
+            await Page.ClickOn(CourseSelectionDropDown);
+            await Page.TypeAsync(CourseSelectionDropDown, "Advanced carpentry and joinery");
+        }
+
         private static string ContinueButton = "#continue-button";
+        private static string CourseSelectionDropDown = "#CourseCode";
     }
 }

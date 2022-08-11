@@ -1152,7 +1152,6 @@ namespace ScenarioBuilder.Generator
                         .WithStartOption(new DateTime(2019, 6, 1))
                         .WithStopOption(new DateTime(2020, 3, 1))
                         .WithChangeOfPartyRequest(ChangeOfPartyRequestType.ChangeEmployer)
-
                 );
             builder.Build();
         }
