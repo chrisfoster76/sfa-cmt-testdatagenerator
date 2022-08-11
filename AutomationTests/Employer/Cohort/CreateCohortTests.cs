@@ -10,10 +10,9 @@ namespace AutomationTests.Employer.Cohort
     [TestFixture]
     public class CreateCohortTests : EmployerTestBase
     {
-        //[TestCase(EmployerActor.NonLevyEmployer, false)]
+        [TestCase(EmployerActor.NonLevyEmployer, false)]
         [TestCase(EmployerActor.NonLevyEmployer, true)]
-        //[TestCase(EmployerActor.LevyEmployer, false)]
-
+        [TestCase(EmployerActor.LevyEmployer, false)]
         public async Task CreateCohort(EmployerActor employerActor, bool withTransferSender)
         {
             var employer = Actors.Employer.Create(employerActor);
@@ -22,83 +21,114 @@ namespace AutomationTests.Employer.Cohort
             var informPage = new InformPage(Page);
             await informPage.GoToPage(employer.EncodedAccountId);
 
+            SelectProviderPage selectProviderPage = new SelectProviderPage(Page); //todo: should not have to set this, should always be set below
+            SelectTransferConnectionPage transferConnectionPage;
+
+
             if (withTransferSender)
             {
-                var transferConnectionPage = await informPage.ClickContinue<SelectTransferConnectionPage>();
-                await transferConnectionPage.SelectNo();
-                var selectProvider = await transferConnectionPage.ClickContinue<SelectProviderPage>();
-            }
+                transferConnectionPage = await informPage.ClickContinue<SelectTransferConnectionPage>();
+                await transferConnectionPage.SelectYes();
 
+                if (employer.HasMultipleLegalEntities)
+                {
+                    var chooseOrganisationPage = await transferConnectionPage.ClickContinue<ChooseOrganisationPage>();
+                    await chooseOrganisationPage.SelectLegalEntity();
+                    selectProviderPage = await chooseOrganisationPage.ClickContinue<SelectProviderPage>();
+                }
+                else
+                {
+                    //if only one legal entity, system will have automatically redirected to select provider page
+                    var chooseOrganisationPage = await transferConnectionPage.ClickContinue<ChooseOrganisationPage>();
+                    selectProviderPage = await chooseOrganisationPage.Redirect<SelectProviderPage>();
+                }
+            }
             
 
+            if(!employer.IsLevyPayer && !withTransferSender)
+            {
+                transferConnectionPage = await informPage.ClickContinue<SelectTransferConnectionPage>();
+                await transferConnectionPage.SelectNo();
+
+                if (employer.HasMultipleLegalEntities)
+                {
+                    var chooseOrganisationPage = await transferConnectionPage.ClickContinue<ChooseOrganisationPage>();
+                    await chooseOrganisationPage.SelectLegalEntity();
+                    selectProviderPage = await chooseOrganisationPage.ClickContinue<SelectProviderPage>();
+                }
+                else
+                {
+                    //if only one legal entity, system will have automatically redirected to select provider page
+                    var chooseOrganisationPage = await transferConnectionPage.ClickContinue<ChooseOrganisationPage>();
+                    selectProviderPage = await chooseOrganisationPage.Redirect<SelectProviderPage>();
+                }
+
+            }
 
 
-
-            ////Journey begins at legal entity selection page (for all intents and purposes)
-            //var chooseOrganisationPage = new ChooseOrganisationPage(Page);
-            //await chooseOrganisationPage.GoToPage(employer.EncodedAccountId);
-
-            //SelectProviderPage selectProviderPage;
-
-            //if (employer.HasMultipleLegalEntities)
-            //{
-            //    await chooseOrganisationPage.SelectLegalEntity();
-            //    selectProviderPage = await chooseOrganisationPage.ClickContinue<SelectProviderPage>();
-            //}
-            //else
-            //{
-            //    //if only one legal entity, system will have automatically redirected to select provider page
-            //    selectProviderPage = await chooseOrganisationPage.Redirect<SelectProviderPage>();
-            //}
-
-            ////select/add provider
-            //await selectProviderPage.EnterProviderId(DefaultProvider.ProviderId.ToString());
-            //var confirmProvider = await selectProviderPage.ClickContinue<ConfirmProviderPage>();
-
-            ////confirm provider
-            //await confirmProvider.SelectConfirmationOption();
-            //var assign = await confirmProvider.ClickContinue();
-
-            ////Assign
-            //await assign.SelectIWillAddApprentices();
+            if (employer.IsLevyPayer)
+            {
+                if (employer.HasMultipleLegalEntities)
+                {
+                    var chooseOrganisationPage = await informPage.ClickContinue<ChooseOrganisationPage>();
+                    await chooseOrganisationPage.SelectLegalEntity();
+                    selectProviderPage = await chooseOrganisationPage.ClickContinue<SelectProviderPage>();
+                }
+                else
+                {
+                    //if only one legal entity, system will have automatically redirected to select provider page
+                    var chooseOrganisationPage = await informPage.ClickContinue<ChooseOrganisationPage>();
+                    selectProviderPage = await chooseOrganisationPage.Redirect<SelectProviderPage>();
+                }
+            }
 
 
-            //SelectStandardPage selectStandard;
+            
+            //select/add provider
+            await selectProviderPage.EnterProviderId(DefaultProvider.ProviderId.ToString());
+            var confirmProvider = await selectProviderPage.ClickContinue<ConfirmProviderPage>();
 
+            //confirm provider
+            await confirmProvider.SelectConfirmationOption();
+            var assign = await confirmProvider.ClickContinue();
 
-            ////Non-levy must select a reservation at this point, unless they have a transfer sender
-            //if (!employer.IsLevyPayer && !withTransferSender)
-            //{
-            //    var selectReservation = await assign.ClickContinue<SelectReservationPage>();
-            //    selectStandard = await selectReservation.ClickContinue<SelectStandardPage>();
-            //}
-            //else
-            //{
-            //    selectStandard = await assign.ClickContinue<SelectStandardPage>();
-            //}
+            //Assign
+            await assign.SelectIWillAddApprentices();
 
-            //var apprentice = await selectStandard.ClickContinue<ApprenticePage>();
+            SelectStandardPage selectStandard;
 
-            ////Apprentice
-            //await apprentice.EnterFirstName("Chris");
-            //await apprentice.EnterLastName("Foster");
-            //await apprentice.ClickContinue<CohortDetailsPage>();
+            //Non-levy must select a reservation at this point, unless they have a transfer sender
+            if (!employer.IsLevyPayer && !withTransferSender)
+            {
+                var selectReservation = await assign.ClickContinue<SelectReservationPage>();
+                selectStandard = await selectReservation.ClickContinue<SelectStandardPage>();
+            }
+            else
+            {
+                selectStandard = await assign.ClickContinue<SelectStandardPage>();
+            }
 
+            await selectStandard.SelectStandard();
+            var apprentice = await selectStandard.ClickContinue<ApprenticePage>();
 
-            ////Assertions
+            //Apprentice
+            await apprentice.EnterFirstName("Chris");
+            await apprentice.EnterLastName("Foster");
+            await apprentice.ClickContinue<CohortDetailsPage>();
         }
 
-        [TestCase(EmployerActor.NonLevyEmployer, false)]
-        [TestCase(EmployerActor.NonLevyEmployer, true)]
         [TestCase(EmployerActor.LevyEmployer, false)]
         public async Task CreateCohortWithProvider(EmployerActor employerActor, bool withTransferSender)
         {
             var employer = Actors.Employer.Create(employerActor);
 
-            //Journey begins in v1, but jumps to v2 select provider page, so let's start here
-            var selectProviderPage = new SelectProviderPage(Page);
-            await selectProviderPage.GoToPage(employer.EncodedAccountId, employer.EncodedAccountLegalEntityId,
-                withTransferSender ? employer.TransferSenderId : "");
+            var informPage = new InformPage(Page);
+            await informPage.GoToPage(employer.EncodedAccountId);
+
+            var chooseOrganisationPage = await informPage.ClickContinue<ChooseOrganisationPage>();
+
+            await chooseOrganisationPage.SelectLegalEntity();
+            var selectProviderPage = await chooseOrganisationPage.ClickContinue<SelectProviderPage>();
 
             //select/add provider
             await selectProviderPage.EnterProviderId(DefaultProvider.ProviderId.ToString());
@@ -115,8 +145,46 @@ namespace AutomationTests.Employer.Cohort
             //Apprentice
             await message.EnterMessage("Hey there!");
             await message.ClickSend();
+        }
 
-            //Assertions
+
+        [TestCase(EmployerActor.NonLevyFlexiJobAgencyEmployer)]
+        public async Task FlexiJobAgencyCreateCohort(EmployerActor employerActor)
+        {
+            var employer = Actors.Employer.Create(employerActor);
+
+
+            var informPage = new InformPage(Page);
+            await informPage.GoToPage(employer.EncodedAccountId);
+
+            //if only one legal entity, system will have automatically redirected to select provider page
+            var selectProviderPage = await informPage.ClickContinue<SelectProviderPage>();
+
+            //select/add provider
+            await selectProviderPage.EnterProviderId(DefaultProvider.ProviderId.ToString());
+            var confirmProvider = await selectProviderPage.ClickContinue<ConfirmProviderPage>();
+
+            //confirm provider
+            await confirmProvider.SelectConfirmationOption();
+            var assign = await confirmProvider.ClickContinue();
+
+            //Assign
+            await assign.SelectIWillAddApprentices();
+
+            //Non-levy must select a reservation at this point, unless they have a transfer sender
+            var selectReservation = await assign.ClickContinue<SelectReservationPage>();
+            var selectStandard = await selectReservation.ClickContinue<SelectStandardPage>();
+
+            await selectStandard.SelectStandard();
+            var deliveryModelPage = await selectStandard.ClickContinue<DeliveryModelPage>();
+
+            await deliveryModelPage.SelectFlexiJobAgencyDeliveryModel();
+            var apprentice = await deliveryModelPage.ClickContinue<ApprenticePage>();
+
+            //Apprentice
+            await apprentice.EnterFirstName("Chris");
+            await apprentice.EnterLastName("Foster");
+            await apprentice.ClickContinue<CohortDetailsPage>();
         }
     }
 

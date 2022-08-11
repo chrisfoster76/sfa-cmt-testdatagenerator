@@ -42,6 +42,16 @@ namespace AutomationTests.Actors
                         TransferSenderId = "",
                         HasMultipleLegalEntities = true
                     };
+                case EmployerActor.NonLevyFlexiJobAgencyEmployer:
+                    return new Employer
+                    {
+                        AccountId = 36853,
+                        AccountLegalEntityId = 701,
+                        Username = "positivity-user",
+                        IsLevyPayer = false,
+                        TransferSenderId = "",
+                        HasMultipleLegalEntities = false
+                    };
                 default:
                     throw new ArgumentException();
             }

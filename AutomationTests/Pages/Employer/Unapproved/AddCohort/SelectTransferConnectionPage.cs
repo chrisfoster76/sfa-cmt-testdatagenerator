@@ -17,6 +17,11 @@ namespace AutomationTests.Pages.Employer.Unapproved.AddCohort
             await Page.ClickOn(NoTransferConnection);
         }
 
+        public async Task SelectYes()
+        {
+            await Page.ClickOn(TransferConnection);
+        }
+
         public async Task<T> ClickContinue<T>() where T : PageObject
         {
             await Page.ClickOn(ContinueButton);
@@ -26,5 +31,7 @@ namespace AutomationTests.Pages.Employer.Unapproved.AddCohort
         private static string ContinueButton = "#submit-transfer-connection";
 
         private static string NoTransferConnection = "#TransferConnection-None";
+
+        private static string TransferConnection = "#TransferConnection-7YRV9B";
     }
 }

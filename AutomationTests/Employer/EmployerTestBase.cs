@@ -30,7 +30,7 @@ namespace AutomationTests.Employer
             {
                 Headless = false,
                 IgnoreHTTPSErrors = true,
-                //SlowMo = 10
+                SlowMo = 0
             };
 
             Console.WriteLine("Launching browser...");
